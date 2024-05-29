@@ -70,6 +70,19 @@ def step_impl(context):
         assert artifact.id
         assert artifact.container
 
+@when("the container is created")
+def step_impl(context):
+    """Creates the Container & Artifact objects within Phantom. This starts making resources in Phantom to run playbook on.
+    Declare any resources (containers/artifacts) before using this step.
+    Example: Then the container and artifacts are created
+    """
+    if not context.container:
+        raise ContainerNotConfigured()
+
+    context.phantom.create_container(context.container)
+
+    assert context.container.id
+
 
 @then('the note "{note_title}" with the content of "{note_content}"')
 def step_impl(context, note_title, note_content):
